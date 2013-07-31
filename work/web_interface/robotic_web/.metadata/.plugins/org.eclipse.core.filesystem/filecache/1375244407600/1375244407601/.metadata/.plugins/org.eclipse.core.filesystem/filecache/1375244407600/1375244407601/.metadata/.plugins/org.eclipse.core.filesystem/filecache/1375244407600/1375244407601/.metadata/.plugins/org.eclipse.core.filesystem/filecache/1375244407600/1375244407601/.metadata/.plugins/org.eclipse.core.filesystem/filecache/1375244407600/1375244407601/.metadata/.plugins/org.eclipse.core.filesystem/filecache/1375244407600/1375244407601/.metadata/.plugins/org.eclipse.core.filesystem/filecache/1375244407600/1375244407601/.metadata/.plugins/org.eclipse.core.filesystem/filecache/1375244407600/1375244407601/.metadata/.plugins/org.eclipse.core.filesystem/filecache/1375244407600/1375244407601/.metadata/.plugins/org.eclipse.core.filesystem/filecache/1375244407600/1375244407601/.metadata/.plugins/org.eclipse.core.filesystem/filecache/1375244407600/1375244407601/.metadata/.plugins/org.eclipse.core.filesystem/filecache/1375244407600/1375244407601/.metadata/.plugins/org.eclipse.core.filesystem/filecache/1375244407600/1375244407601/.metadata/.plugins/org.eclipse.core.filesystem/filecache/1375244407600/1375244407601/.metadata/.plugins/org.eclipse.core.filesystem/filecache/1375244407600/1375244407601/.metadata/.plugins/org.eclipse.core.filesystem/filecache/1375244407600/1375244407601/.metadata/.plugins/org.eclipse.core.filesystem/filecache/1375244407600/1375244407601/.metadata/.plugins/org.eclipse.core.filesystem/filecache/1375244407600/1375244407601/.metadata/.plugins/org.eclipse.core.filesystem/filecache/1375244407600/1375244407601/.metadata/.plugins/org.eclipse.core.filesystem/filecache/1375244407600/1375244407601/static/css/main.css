@@ -1,0 +1,27 @@
+video#remote {
+    width: 480px;
+    height: 360px;
+    background: #777;
+}
+
+video#local {
+    position: absolute;
+    width: 160px;
+    height: 120px;
+    background: #555;
+    margin-top: 240px;
+    margin-left: -160px;
+}
+
+footer {
+    background: #222;
+    color: #ccc;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.error {
+    color: #ff9696;
+}

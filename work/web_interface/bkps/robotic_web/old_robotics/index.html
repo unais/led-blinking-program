@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<script src="scripts/eventemitter2.js"></script>
+     	<script src="scripts/ros.js"></script>
+     	<script src="scripts/joystick.js"></script>
+	<script type="text/javascript" src="scripts/jquery.min.js"></script>
+  	<script type="text/javascript" src="scripts/joystick_axes.js"></script>
+    	<script type='text/javascript' src='scripts/jsapi'></script>
+    	<script type='text/javascript' src='scripts/battery.js'></script>
+  	<script type='text/javascript' src='scripts/speedometer.js'></script>
+  	<script type='text/javascript' src='scripts/temperature.js'></script>
+
+ 	<script type="text/javascript">
+	$(function() {
+        	var stick = new Joystick('holder');
+        	window.setInterval(function() {
+                	$('#console').html(stick.x + ',' + stick.z);
+			if ((stick.x != 0) || (stick.z != 0)){ 
+			console.log('x : '+ stick.x + ',' + 'y : ' + stick.z);
+       			main(stick.x , stick.z);
+			}
+		},33);
+	});
+  	</script>
+  	
+
+    <link href="Style/Robotics.css" rel="stylesheet" type="text/css">
+</head>
+
+
+<body>
+
+<div id="header">
+  <h1 align="center"><font color="red">ZEUS ROBOTICS</font></h1>
+  <h1 align="center">ROBOTIC WEB APPLICATIONS : JOYSTICK SIMULATION</h1>
+  </div>
+
+
+<div id="rw1">
+<div id="holder"></div>
+<div id="console" ></div>
+
+
+<div id="controller">
+<div><button id="btnforward"type="button" onClick="moveForward();"> </button></div>
+
+<div id="left"><button id="btnleft" type="button" onClick="turnLeft();"> </button></div>
+<div id="right"><button id="btnright" type="button" onClick="turnRight();"> </button></div>
+
+<div><button id="btnback" type="button" onClick="moveBackward()"> </button></div>
+<div><button id="btnEmergency" type="button" onClick="emerStop();"></button></div>
+</div>
+
+</div>
+
+<div id="rw2">
+<div id='speedometer_div'></div>
+<div id='chart_div'></div>
+<div id='temp_div'></div>
+</div>
+
+<div style="clear:both;margin-left:300px;">
+
+ 	<p> 
+    		<font color="green"><b>Run the following commands in the terminal and see the console. </font></b>
+  	</p>
+	<div>
+	<br />
+  <ol>
+    <li>roscore</li>
+    <li>rosrun rospy_tutorials add_two_ints_server</li>
+    <li>rosrun rosapi rosapi.py</li>
+    <li>rosrun rosbridge_server rosbridge.py</li>
+  </ol>
+
+</div>
+</div>
+</body>
+</html>

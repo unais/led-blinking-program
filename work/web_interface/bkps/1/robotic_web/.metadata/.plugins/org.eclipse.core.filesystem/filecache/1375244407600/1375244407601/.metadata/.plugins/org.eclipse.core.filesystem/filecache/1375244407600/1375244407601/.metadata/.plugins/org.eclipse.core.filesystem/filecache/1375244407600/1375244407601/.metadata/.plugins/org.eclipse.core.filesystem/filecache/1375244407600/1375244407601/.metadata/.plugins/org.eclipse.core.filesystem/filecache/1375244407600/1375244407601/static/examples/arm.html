@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<script src="/static/include/EventEmitter2/eventemitter2.js"></script>
+<script src="/static/build/roslib.js"></script>
+
+<div id="header">
+<h1 align="center"><font color="red">Asimov Robotics Pvt Ltd</font></h1>
+<h1 align="center">ISRA WEB CONTROL</h1>
+</div>
+
+</head>
+
+<body bgcolor="#E6E6FA" >
+    <div id="container" style="width:1300px;height:768">
+
+	<div id="menu" style="background-color:#E6E6FA;height:600px;width:200px;float:left;">
+		
+		<a href="/main"><b>Home</b></a><br>
+		<a href="/arm">Arm Navigation<a><br>
+
+		<a href="/camera">Camera</a><br />
+		<a href="/chat">Video Conference</a>
+	</div>
+
+	<div id="content" style="background-color:#EEEEEE;height:600px;width:1100px;float:left;">
+
+
+
+
+<script>
+
+  // Connecting to ROS
+  // -----------------
+  var ros = new ROSLIB.Ros();
+
+  // If there is an error on the backend, an 'error' emit will be emitted.
+  ros.on('error', function(error) {
+    console.log(error);
+  });
+
+  // Find out exactly when we made a connection.
+  ros.on('connection', function() {
+    console.log('Connection made!');
+  });
+
+  // Create a connection to the rosbridge WebSocket server.
+  ros.connect('ws://192.168.0.109:9090');
+
+    function updateSlider1(slideAmount1) {
+        var sliderDiv = document.getElementById("sliderAmount1");
+        sliderDiv.innerHTML = slideAmount1;
+        console.log(slideAmount1);
+
+ 	 // First, we create a Topic object with details of the topic's name and message type.
+	  var arm1X = new ROSLIB.Topic({
+	    ros : ros,
+	    name : '/arm1x',
+	    messageType : 'std_msgs/Int16'
+	  });
+
+	var test = parseInt(slideAmount1)
+	console.log(test)
+
+	var str = new ROSLIB.Message({
+        	data: test
+   	});
+
+	arm1X.publish(str);
+
+    }
+
+    function updateSlider2(slideAmount2) {
+        var sliderDiv = document.getElementById("sliderAmount2");
+        sliderDiv.innerHTML = slideAmount2;
+        console.log(slideAmount2);
+
+ 	 // First, we create a Topic object with details of the topic's name and message type.
+	  var arm1Y = new ROSLIB.Topic({
+	    ros : ros,
+	    name : '/arm1y',
+	    messageType : 'std_msgs/Int16'
+	  });
+
+	var test = parseInt(slideAmount2)
+	console.log(test)
+
+	var str = new ROSLIB.Message({
+        	data: test
+   	});
+
+	arm1Y.publish(str);
+
+    }
+
+    function updateSlider3(slideAmount3) {
+        var sliderDiv = document.getElementById("sliderAmount3");
+        sliderDiv.innerHTML = slideAmount3;
+        console.log(slideAmount3);
+
+ 	 // First, we create a Topic object with details of the topic's name and message type.
+	  var arm1Z = new ROSLIB.Topic({
+	    ros : ros,
+	    name : '/arm1z',
+	    messageType : 'std_msgs/Int16'
+	  });
+
+	var test = parseInt(slideAmount3)
+	console.log(test)
+
+	var str = new ROSLIB.Message({
+        	data: test
+   	});
+
+	arm1Z.publish(str);
+
+
+    }
+
+    function updateSlider4(slideAmount4) {
+        var sliderDiv = document.getElementById("sliderAmount4");
+        sliderDiv.innerHTML = slideAmount4;
+        console.log(slideAmount4);
+   
+    	 // First, we create a Topic object with details of the topic's name and message type.
+	  var arm2X = new ROSLIB.Topic({
+	    ros : ros,
+	    name : '/arm2x',
+	    messageType : 'std_msgs/Int16'
+	  });
+
+	var test = parseInt(slideAmount4)
+	console.log(test)
+
+	var str = new ROSLIB.Message({
+        	data: test
+   	});
+
+	arm2X.publish(str);
+
+   
+    }
+
+    function updateSlider5(slideAmount5) {
+        var sliderDiv = document.getElementById("sliderAmount5");
+        sliderDiv.innerHTML = slideAmount5;
+        console.log(slideAmount5);
+    
+     	 // First, we create a Topic object with details of the topic's name and message type.
+	  var arm2Y = new ROSLIB.Topic({
+	    ros : ros,
+	    name : '/arm2y',
+	    messageType : 'std_msgs/Int16'
+	  });
+
+	var test = parseInt(slideAmount5)
+	console.log(test)
+
+	var str = new ROSLIB.Message({
+        	data: test
+   	});
+
+	arm2Y.publish(str);
+
+    }
+
+    function updateSlider6(slideAmount6) {
+        var sliderDiv = document.getElementById("sliderAmount6");
+        sliderDiv.innerHTML = slideAmount6;
+        console.log(slideAmount6);
+   
+    	 // First, we create a Topic object with details of the topic's name and message type.
+	  var arm2Z = new ROSLIB.Topic({
+	    ros : ros,
+	    name : '/arm2z',
+	    messageType : 'std_msgs/Int16'
+	  });
+
+	var test = parseInt(slideAmount6)
+	console.log(test)
+
+	var str = new ROSLIB.Message({
+        	data: test
+   	});
+
+	arm2Z.publish(str);
+
+   
+    }
+
+</script>
+
+<input id="slide" type="range" min="0" max="1000" step="1" value="0" onchange="updateSlider1(this.value)">
+<div id="sliderAmount1">0</div>
+<input id="slide" type="range" min="0" max="1000" step="1" value="0" onchange="updateSlider2(this.value)">
+<div id="sliderAmount2">0</div>
+
+<input id="slide" type="range" min="0" max="1000" step="1" value="0" onchange="updateSlider3(this.value)">
+<div id="sliderAmount3">0</div>
+
+<input id="slide" type="range" min="0" max="1000" step="1" value="0" onchange="updateSlider4(this.value)">
+<div id="sliderAmount4">0</div>
+
+<input id="slide" type="range" min="0" max="1000" step="1" value="0" onchange="updateSlider5(this.value)">
+<div id="sliderAmount5">0</div>
+
+<input id="slide" type="range" min="0" max="1000" step="1" value="0" onchange="updateSlider6(this.value)">
+<div id="sliderAmount6">0</div>
+
+
+
+
+  		
+	</div>
+
+	<div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
+	Copyright © Asimov Robotics Pvt Ltd</div>
+
+</body>
+</html>

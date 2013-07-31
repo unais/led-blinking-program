@@ -1,0 +1,122 @@
+@charset "utf-8";
+* {
+margin:0px;
+padding:0px;
+}
+body
+{
+	background-color: yellow;
+}
+
+#header
+{
+ margin-bottom:100px;
+}
+#holder {
+width: 300px;
+ height: 300px; 
+ border: solid 2px black; 
+
+ margin-left:50px;
+
+}
+#console{
+margin-left:50px;
+
+
+}
+#controller {
+    clear:both;
+	height: 220px;
+	width: 200px;
+
+	margin-left:100px;
+	
+}
+#controller button{
+background-color:#fff;
+border:0;
+}
+#rw2 #chart_div {
+
+}
+
+#temp_div {
+	
+}
+
+
+#controller #left {
+	float: left;
+	width: 50%;
+}
+#controller #right {
+	float: left;
+	width: 45%;
+}
+
+
+#controller #btnforward{
+margin-left:50px;
+background-image:url(../Image/Forw.png);
+width:50px;
+height:50px;
+background-color:yellow;
+}
+#controller #btnleft{
+background-image:url(../Image/Left.png);
+width:50px;
+height:50px;
+}
+#controller #btnright{
+	
+	width:50px;
+	height:50px;
+	background-image: url(../Image/right.png);
+}
+#controller #btnback{
+margin-left:50px;
+background-image:url(../Image/Back.png);
+width:50px;
+height:50px;
+}
+#rw1 {
+	float: left;
+	height: 600px;
+	width: 40%;
+	margin-left:100px;
+}
+#rw2 {
+	float: left;
+	min-width:500px;
+	max-width:500px;
+	height: 600px;
+	width: 50%;
+	
+	
+}
+#rw2 #speedometer_div {
+	margin:0px auto;
+	width: 245px;
+	text-align:center;
+	}
+#rw2 #chart_div {
+	clear: both;
+	float: left;
+	width: 245px;
+	
+	text-align:center;
+
+}
+#rw2 #temp_div {
+	float: right;
+	width:245px;
+	/*border:1px solid black;*/
+}
+#controller #btnEmergency {
+background-image:url(../Image/Emer.png);
+	height: 50px;
+	width: 50px;
+	margin-left:50px;
+}
+ 

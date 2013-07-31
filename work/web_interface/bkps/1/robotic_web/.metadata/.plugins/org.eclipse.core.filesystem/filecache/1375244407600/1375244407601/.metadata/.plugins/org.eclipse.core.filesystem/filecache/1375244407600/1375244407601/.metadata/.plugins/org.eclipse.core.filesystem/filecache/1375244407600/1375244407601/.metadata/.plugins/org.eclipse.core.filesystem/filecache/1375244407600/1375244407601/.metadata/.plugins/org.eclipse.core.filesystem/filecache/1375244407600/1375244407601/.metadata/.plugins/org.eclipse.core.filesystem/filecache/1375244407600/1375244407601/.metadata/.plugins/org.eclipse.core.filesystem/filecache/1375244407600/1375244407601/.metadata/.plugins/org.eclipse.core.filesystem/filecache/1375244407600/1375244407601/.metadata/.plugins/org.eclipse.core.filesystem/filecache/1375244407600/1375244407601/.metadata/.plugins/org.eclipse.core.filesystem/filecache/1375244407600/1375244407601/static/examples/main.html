@@ -1,0 +1,1899 @@
+<!DOCTYPE html>
+<html>
+<head>
+<div id="header">
+<h1 align="center"><font color="red">Asimov Robotics Pvt Ltd</font></h1>
+<h1 align="center">ISRA WEB CONTROL</h1>
+</div>
+
+<meta charset="utf-8" />
+<script src="/static/include/EventEmitter2/eventemitter2.js"></script>
+<script src="/static/build/roslib.js"></script>
+
+<script>
+
+// Connecting to ROS
+// -----------------
+   var ros = new ROSLIB.Ros();
+
+   // If there is an error on the backend, an 'error' emit will be emitted.
+   ros.on('error', function(error) {
+     console.log(error);
+   });
+
+   // Find out exactly when we made a connection.
+   ros.on('connection', function() {
+     console.log('Connection made!');
+   });
+
+   // Create a connection to the rosbridge WebSocket server.
+   ros.connect('ws://192.168.0.109:9090');
+
+   // Publishing a Topic
+   // ------------------
+
+   // First, we create a Topic object with details of the topic's name and      message type.
+   var pubExp = new ROSLIB.Topic({
+     ros : ros,
+     name : '/face_expression',
+     messageType : 'std_msgs/Int16'
+   });
+
+   var pubDyn = new ROSLIB.Topic({
+     ros : ros,
+     name : '/rover_angle',
+     messageType : 'std_msgs/Float64'
+   });
+   
+   var pubSab = new ROSLIB.Topic({
+     ros : ros,
+     name : '/arduino_sabertooth/command',
+     messageType : 'std_msgs/Int16'
+   });
+   
+   
+   var pubOther = new ROSLIB.Topic({
+     ros : ros,
+     name : '/web_controls',
+     messageType : 'std_msgs/Int16'
+   });
+
+   var pubSpin = new ROSLIB.Topic({
+     ros : ros,
+     name : '/spin_mode',
+     messageType : 'std_msgs/Bool'
+   });
+
+   var pubSer1 = new ROSLIB.Topic({
+     ros : ros,
+     name : '/rc_servo1/command',
+     messageType : 'std_msgs/Int16'
+   });
+
+   var pubSer2 = new ROSLIB.Topic({
+     ros : ros,
+     name : '/rc_servo2/command',
+     messageType : 'std_msgs/Int16'
+   });
+
+   var pubSer3 = new ROSLIB.Topic({
+     ros : ros,
+     name : '/rc_servo3/command',
+     messageType : 'std_msgs/Int16'
+   });
+
+
+   var pubSer4 = new ROSLIB.Topic({
+     ros : ros,
+     name : '/rc_servo4/command',
+     messageType : 'std_msgs/Int16'
+   });
+
+   var pubSer5 = new ROSLIB.Topic({
+     ros : ros,
+     name : '/rc_servo5/command',
+     messageType : 'std_msgs/Int16'
+   });
+
+
+   var pubNec1 = new ROSLIB.Topic({
+     ros : ros,
+     name : '/  /command',
+     messageType : 'std_msgs/Int16'
+   });
+
+   var pubNec2 = new ROSLIB.Topic({
+     ros : ros,
+     name : '/ /command',
+     messageType : 'std_msgs/Int16'
+   });
+
+
+function spinLeftOn()
+{
+	console.log("spinlefton")
+        var spnlon = new ROSLIB.Message({
+        	data : true
+         });
+
+	pubSpin.publish(spnlon)
+
+ 	var spnlovel = new ROSLIB.Message({
+        	data : -70
+        });
+
+   	pubSab.publish(spnlovel)
+
+
+
+}
+
+function spinLeftOff()
+{
+	console.log("spinleftoff")
+
+
+        var spnloffvel = new ROSLIB.Message({
+                data : 0
+        });
+
+        pubSab.publish(spnloffvel)
+
+
+}
+
+function spinRightOn()
+{
+	console.log("spin right on")
+
+        var spnron = new ROSLIB.Message({
+                data : true
+         });
+
+        pubSpin.publish(spnron)
+  
+       var spnrovel = new ROSLIB.Message({
+                data : 70
+        });
+
+        pubSab.publish(spnrovel)
+
+}
+
+
+function spinRightOff()
+{
+	console.log("spin right off")
+       var spnloffvel = new ROSLIB.Message({
+                data : 0
+        });
+
+        pubSab.publish(spnloffvel)
+
+}
+
+
+
+function pubLF()
+{
+
+	var lf = new ROSLIB.Message({
+  	data : 0.785
+	});
+	
+	var lfvel = new ROSLIB.Message({
+  	data : -70
+	});
+
+   pubDyn.publish(lf);
+   pubSab.publish(lfvel)
+
+}
+
+
+function pubF()
+{
+
+	var f = new ROSLIB.Message({
+  	data : 0
+	});
+	
+	var fvel = new ROSLIB.Message({
+  	data : -70
+	});
+
+   pubDyn.publish(f);
+   pubSab.publish(fvel)
+
+}
+
+
+function pubRF()
+{
+
+	var rf = new ROSLIB.Message({
+  	data : -0.785
+	});
+	
+	var rfvel = new ROSLIB.Message({
+  	data : -70
+	});
+
+   pubDyn.publish(rf);
+   pubSab.publish(rfvel)
+
+}
+
+function pubL()
+{
+
+	var l = new ROSLIB.Message({
+  	data : 1.57
+	});
+	
+	var lvel = new ROSLIB.Message({
+  	data : -70
+	});
+
+   pubDyn.publish(l);
+   pubSab.publish(lvel)
+
+}
+
+function pubStop()
+{
+
+
+	var svel = new ROSLIB.Message({
+  	data : 0
+	});
+
+
+   pubSab.publish(svel)
+
+}
+
+function pubR()
+{
+
+	var r = new ROSLIB.Message({
+  	data : -1.57
+	});
+	
+	var rvel = new ROSLIB.Message({
+  	data : -70
+	});
+
+   pubDyn.publish(r);
+   pubSab.publish(rvel)
+
+}
+
+
+function pubLB()
+{
+
+	var lb = new ROSLIB.Message({
+  	data : -0.785
+	});
+	
+	var lbvel = new ROSLIB.Message({
+  	data : 70
+	});
+
+   pubDyn.publish(lb);
+   pubSab.publish(lbvel)
+}
+
+function pubB()
+{
+
+	var b = new ROSLIB.Message({
+  	data : 0
+	});
+	
+	var bvel = new ROSLIB.Message({
+  	data : 70
+	});
+
+   pubDyn.publish(b);
+   pubSab.publish(bvel)
+
+}
+
+
+
+function pubBR()
+{
+
+	var br = new ROSLIB.Message({
+  	data : 0.785
+	});
+	
+	var brvel = new ROSLIB.Message({
+  	data : 70
+	});
+
+   pubDyn.publish(br);
+   pubSab.publish(brvel)
+
+}
+
+
+function pubExp1()
+{
+
+	var ser1 = new ROSLIB.Message({
+  	data : 30
+	});
+
+	var ser2 = new ROSLIB.Message({
+  	data : 30
+	});
+	
+	var ser3 = new ROSLIB.Message({
+  	data : 30
+	});
+	
+	var ser4 = new ROSLIB.Message({
+  	data : 30
+	});
+	
+	var ser5 = new ROSLIB.Message({
+  	data : 30
+	});
+
+	var neck1 = new ROSLIB.Message({
+  	data : 30
+	});
+
+	var neck2 = new ROSLIB.Message({
+  	data : 30
+	});
+
+    pubSer1.publish(ser1);
+    pubSer2.publish(ser2);
+    pubSer3.publish(ser3);
+    pubSer4.publish(ser4);
+    pubSer5.publish(ser5);
+	pubNec1.publish(neck1);
+	pubNec2.publish(neck2);
+}
+
+
+
+function pubExp2()
+{
+
+	var ser1 = new ROSLIB.Message({
+  	data : 30
+	});
+
+	var ser2 = new ROSLIB.Message({
+  	data : 30
+	});
+	
+	var ser3 = new ROSLIB.Message({
+  	data : 30
+	});
+	
+	var ser4 = new ROSLIB.Message({
+  	data : 30
+	});
+	
+	var ser5 = new ROSLIB.Message({
+  	data : 30
+	});
+
+	var neck1 = new ROSLIB.Message({
+  	data : 30
+	});
+
+	var neck2 = new ROSLIB.Message({
+  	data : 30
+	});
+
+    pubSer1.publish(ser1);
+    pubSer2.publish(ser2);
+    pubSer3.publish(ser3);
+    pubSer4.publish(ser4);
+    pubSer5.publish(ser5);
+	pubNec1.publish(neck1);
+	pubNec2.publish(neck2);
+}
+
+
+
+function pubExp3()
+{
+
+	var ser1 = new ROSLIB.Message({
+  	data : 30
+	});
+
+	var ser2 = new ROSLIB.Message({
+  	data : 30
+	});
+	
+	var ser3 = new ROSLIB.Message({
+  	data : 30
+	});
+	
+	var ser4 = new ROSLIB.Message({
+  	data : 30
+	});
+	
+	var ser5 = new ROSLIB.Message({
+  	data : 30
+	});
+
+	var neck1 = new ROSLIB.Message({
+  	data : 30
+	});
+
+	var neck2 = new ROSLIB.Message({
+  	data : 30
+	});
+
+
+    pubSer1.publish(ser1);
+    pubSer2.publish(ser2);
+    pubSer3.publish(ser3);
+    pubSer4.publish(ser4);
+    pubSer5.publish(ser5);
+	pubNec1.publish(neck1);
+	pubNec2.publish(neck2);
+}
+
+
+
+function pubExp4()
+{
+
+	var ser1 = new ROSLIB.Message({
+  	data : 30
+	});
+
+	var ser2 = new ROSLIB.Message({
+  	data : 30
+	});
+	
+	var ser3 = new ROSLIB.Message({
+  	data : 30
+	});
+	
+	var ser4 = new ROSLIB.Message({
+  	data : 30
+	});
+	
+	var ser5 = new ROSLIB.Message({
+  	data : 30
+	});
+
+	var neck1 = new ROSLIB.Message({
+  	data : 30
+	});
+
+	var neck2 = new ROSLIB.Message({
+  	data : 30
+	});
+
+    pubSer1.publish(ser1);
+    pubSer2.publish(ser2);
+    pubSer3.publish(ser3);
+    pubSer4.publish(ser4);
+    pubSer5.publish(ser5);
+	pubNec1.publish(neck1);
+	pubNec2.publish(neck2);
+}
+
+
+
+function pubChangeMode()
+{
+
+	var mode = new ROSLIB.Message({
+  	data : 1
+	});
+
+    pubOther.publish(mode);
+}
+
+
+function pubRealtime()
+{
+
+	var mode = new ROSLIB.Message({
+  	data : 2
+	});
+
+    pubOther.publish(mode);
+
+
+
+	var mode = new ROSLIB.Message({
+  	data : 6
+	});
+
+    pubOther.publish(mode);
+
+ 	 // First, we create a Service client with details of the service's name and service type.
+//  var serrt = new ROSLIB.Service({
+//    ros : ros,
+//    name : 'mode_real',
+//    serviceType : 'isra_vr_chair/ModeReal'
+//  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+//  var request1 = new ROSLIB.ServiceRequest({
+//    bool : true
+//  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+//  serrt.callService(request1, function(result) {
+//    console.log('Result for service call on ' + ser1.name );
+//  });
+
+}
+
+
+function pubPlay()
+{
+
+	var mode = new ROSLIB.Message({
+  	data : 4
+	});
+
+    pubOther.publish(mode);
+}
+
+
+function pubRecord()
+{
+
+	var mode = new ROSLIB.Message({
+  	data : 3
+	});
+
+    pubOther.publish(mode);
+}
+
+function pubAutonomous()
+{
+
+	var mode = new ROSLIB.Message({
+  	data : 5
+	});
+
+    pubOther.publish(mode);
+}
+
+
+function pubTorqueEnable()
+{
+
+//	var mode = new ROSLIB.Message({
+  //	data : 6
+//	});
+
+//    pubOther.publish(mode);
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser1 = new ROSLIB.Service({
+    ros : ros,
+    name : '/base1_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request1 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser1.callService(request1, function(result) {
+    console.log('Result for service call on ' + ser1.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser2 = new ROSLIB.Service({
+    ros : ros,
+    name : '/base2_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request2 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser2.callService(request2, function(result) {
+    console.log('Result for service call on ' + ser2.name );
+  });
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser3 = new ROSLIB.Service({
+    ros : ros,
+    name : '/base3_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request3 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser3.callService(request3, function(result) {
+    console.log('Result for service call on ' + ser3.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser4 = new ROSLIB.Service({
+    ros : ros,
+    name : '/base4_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request4 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser4.callService(request4, function(result) {
+    console.log('Result for service call on ' + ser4.name );
+  });
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser5 = new ROSLIB.Service({
+    ros : ros,
+    name : '/base5_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request5 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser5.callService(request5, function(result) {
+    console.log('Result for service call on ' + ser5.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser6 = new ROSLIB.Service({
+    ros : ros,
+    name : '/base6_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request6 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser6.callService(request6, function(result) {
+    console.log('Result for service call on ' + ser6.name );
+  });
+
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser24 = new ROSLIB.Service({
+    ros : ros,
+    name : '/l_arm_sh_roll_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request24 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser24.callService(request24, function(result) {
+    console.log('Result for service call on ' + ser24.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser25 = new ROSLIB.Service({
+    ros : ros,
+    name : '/l_arm_sh_pitch_1_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request25 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser25.callService(request25, function(result) {
+    console.log('Result for service call on ' + ser25.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser26 = new ROSLIB.Service({
+    ros : ros,
+    name : '/l_arm_sh_pitch_2_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request26 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser26.callService(request26, function(result) {
+    console.log('Result for service call on ' + ser26.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser27 = new ROSLIB.Service({
+    ros : ros,
+    name : '/l_arm_elbow_roll_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request27 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser27.callService(request27, function(result) {
+    console.log('Result for service call on ' + ser27.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser7 = new ROSLIB.Service({
+    ros : ros,
+    name : '/l_arm_elbow_pitch_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request7 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser7.callService(request7, function(result) {
+    console.log('Result for service call on ' + ser7.name );
+  });
+
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser8 = new ROSLIB.Service({
+    ros : ros,
+    name : '/l_arm_wrist_roll_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request8 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser8.callService(request8, function(result) {
+    console.log('Result for service call on ' + ser8.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser9 = new ROSLIB.Service({
+    ros : ros,
+    name : '/l_arm_wrist_pitch_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request9 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser9.callService(request9, function(result) {
+    console.log('Result for service call on ' + ser9.name );
+  });
+
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser10 = new ROSLIB.Service({
+    ros : ros,
+    name : '/l_arm_wrist_yaw_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request10 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser10.callService(request10, function(result) {
+    console.log('Result for service call on ' + ser10.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser11 = new ROSLIB.Service({
+    ros : ros,
+    name : '/l_arm_gripper_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request11 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser11.callService(request11, function(result) {
+    console.log('Result for service call on ' + ser11.name );
+  });
+
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser12 = new ROSLIB.Service({
+    ros : ros,
+    name : '/r_arm_sh_roll_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request12 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser12.callService(request12, function(result) {
+    console.log('Result for service call on ' + ser12.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser13 = new ROSLIB.Service({
+    ros : ros,
+    name : '/r_arm_sh_pitch_1_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request13 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser13.callService(request13, function(result) {
+    console.log('Result for service call on ' + ser13.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser14 = new ROSLIB.Service({
+    ros : ros,
+    name : '/r_arm_sh_pitch_2_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request14 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser14.callService(request14, function(result) {
+    console.log('Result for service call on ' + ser14.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser15 = new ROSLIB.Service({
+    ros : ros,
+    name : '/r_arm_elbow_roll_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request15 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser15.callService(request15, function(result) {
+    console.log('Result for service call on ' + ser15.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser16 = new ROSLIB.Service({
+    ros : ros,
+    name : '/r_arm_elbow_pitch_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request16 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser16.callService(request16, function(result) {
+    console.log('Result for service call on ' + ser16.name );
+  });
+
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser17 = new ROSLIB.Service({
+    ros : ros,
+    name : '/r_arm_wrist_roll_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request17 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser17.callService(request17, function(result) {
+    console.log('Result for service call on ' + ser17.name );
+  });
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser18 = new ROSLIB.Service({
+    ros : ros,
+    name : '/r_arm_wrist_pitch_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request18 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser18.callService(request18, function(result) {
+    console.log('Result for service call on ' + ser18.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser19 = new ROSLIB.Service({
+    ros : ros,
+    name : '/r_arm_wrist_yaw_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request19 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser19.callService(request19, function(result) {
+    console.log('Result for service call on ' + ser19.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser20 = new ROSLIB.Service({
+    ros : ros,
+    name : '/r_arm_gripper_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request20 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser20.callService(request20, function(result) {
+    console.log('Result for service call on ' + ser20.name );
+  });
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser21 = new ROSLIB.Service({
+    ros : ros,
+    name : '/head_pan_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request21 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser21.callService(request21, function(result) {
+    console.log('Result for service call on ' + ser21.name );
+  });
+
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser22 = new ROSLIB.Service({
+    ros : ros,
+    name : '/head_tilt_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request22 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser22.callService(request22, function(result) {
+    console.log('Result for service call on ' + ser22.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser23 = new ROSLIB.Service({
+    ros : ros,
+    name : '/waist_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request23 = new ROSLIB.ServiceRequest({
+    bool : true
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser23.callService(request23, function(result) {
+    console.log('Result for service call on ' + ser23.name );
+  });
+
+
+
+
+}
+
+
+function pubTorqueDisable()
+{
+
+//	var mode = new ROSLIB.Message({
+  //	data : 7
+//	});
+
+  //  pubOther.publish(mode);
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser1 = new ROSLIB.Service({
+    ros : ros,
+    name : '/base1_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request1 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser1.callService(request1, function(result) {
+    console.log('Result for service call on ' + ser1.name );
+  });
+
+
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser2 = new ROSLIB.Service({
+    ros : ros,
+    name : '/base2_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request2 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser2.callService(request2, function(result) {
+    console.log('Result for service call on ' + ser2.name );
+  });
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser3 = new ROSLIB.Service({
+    ros : ros,
+    name : '/base3_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request3 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser3.callService(request3, function(result) {
+    console.log('Result for service call on ' + ser3.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser4 = new ROSLIB.Service({
+    ros : ros,
+    name : '/base4_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request4 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser4.callService(request4, function(result) {
+    console.log('Result for service call on ' + ser4.name );
+  });
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser5 = new ROSLIB.Service({
+    ros : ros,
+    name : '/base5_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request5 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser5.callService(request5, function(result) {
+    console.log('Result for service call on ' + ser5.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser6 = new ROSLIB.Service({
+    ros : ros,
+    name : '/base6_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request6 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser6.callService(request6, function(result) {
+    console.log('Result for service call on ' + ser6.name );
+  });
+
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser24 = new ROSLIB.Service({
+    ros : ros,
+    name : '/l_arm_sh_roll_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request24 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser24.callService(request24, function(result) {
+    console.log('Result for service call on ' + ser24.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser25 = new ROSLIB.Service({
+    ros : ros,
+    name : '/l_arm_sh_pitch_1_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request25 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser25.callService(request25, function(result) {
+    console.log('Result for service call on ' + ser25.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser26 = new ROSLIB.Service({
+    ros : ros,
+    name : '/l_arm_sh_pitch_2_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request26 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser26.callService(request26, function(result) {
+    console.log('Result for service call on ' + ser26.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser27 = new ROSLIB.Service({
+    ros : ros,
+    name : '/l_arm_elbow_roll_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request27 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser27.callService(request27, function(result) {
+    console.log('Result for service call on ' + ser27.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser7 = new ROSLIB.Service({
+    ros : ros,
+    name : '/l_arm_elbow_pitch_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request7 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser7.callService(request7, function(result) {
+    console.log('Result for service call on ' + ser7.name );
+  });
+
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser8 = new ROSLIB.Service({
+    ros : ros,
+    name : '/l_arm_wrist_roll_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request8 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser8.callService(request8, function(result) {
+    console.log('Result for service call on ' + ser8.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser9 = new ROSLIB.Service({
+    ros : ros,
+    name : '/l_arm_wrist_pitch_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request9 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser9.callService(request9, function(result) {
+    console.log('Result for service call on ' + ser9.name );
+  });
+
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser10 = new ROSLIB.Service({
+    ros : ros,
+    name : '/l_arm_wrist_yaw_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request10 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser10.callService(request10, function(result) {
+    console.log('Result for service call on ' + ser10.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser11 = new ROSLIB.Service({
+    ros : ros,
+    name : '/l_arm_gripper_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request11 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser11.callService(request11, function(result) {
+    console.log('Result for service call on ' + ser11.name );
+  });
+
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser12 = new ROSLIB.Service({
+    ros : ros,
+    name : '/r_arm_sh_roll_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request12 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser12.callService(request12, function(result) {
+    console.log('Result for service call on ' + ser12.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser13 = new ROSLIB.Service({
+    ros : ros,
+    name : '/r_arm_sh_pitch_1_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request13 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser13.callService(request13, function(result) {
+    console.log('Result for service call on ' + ser13.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser14 = new ROSLIB.Service({
+    ros : ros,
+    name : '/r_arm_sh_pitch_2_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request14 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser14.callService(request14, function(result) {
+    console.log('Result for service call on ' + ser14.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser15 = new ROSLIB.Service({
+    ros : ros,
+    name : '/r_arm_elbow_roll_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request15 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser15.callService(request15, function(result) {
+    console.log('Result for service call on ' + ser15.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser16 = new ROSLIB.Service({
+    ros : ros,
+    name : '/r_arm_elbow_pitch_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request16 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser16.callService(request16, function(result) {
+    console.log('Result for service call on ' + ser16.name );
+  });
+
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser17 = new ROSLIB.Service({
+    ros : ros,
+    name : '/r_arm_wrist_roll_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request17 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser17.callService(request17, function(result) {
+    console.log('Result for service call on ' + ser17.name );
+  });
+
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser18 = new ROSLIB.Service({
+    ros : ros,
+    name : '/r_arm_wrist_pitch_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request18 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser18.callService(request18, function(result) {
+    console.log('Result for service call on ' + ser18.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser19 = new ROSLIB.Service({
+    ros : ros,
+    name : '/r_arm_wrist_yaw_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request19 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser19.callService(request19, function(result) {
+    console.log('Result for service call on ' + ser19.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser20 = new ROSLIB.Service({
+    ros : ros,
+    name : '/r_arm_gripper_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request20 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser20.callService(request20, function(result) {
+    console.log('Result for service call on ' + ser20.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser21 = new ROSLIB.Service({
+    ros : ros,
+    name : '/head_pan_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request21 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser21.callService(request21, function(result) {
+    console.log('Result for service call on ' + ser21.name );
+  });
+
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser22 = new ROSLIB.Service({
+    ros : ros,
+    name : '/head_tilt_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request22 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser22.callService(request22, function(result) {
+    console.log('Result for service call on ' + ser22.name );
+  });
+
+
+
+  // First, we create a Service client with details of the service's name and service type.
+  var ser23 = new ROSLIB.Service({
+    ros : ros,
+    name : '/waist_controller/torque_enable',
+    serviceType : 'dynamixel_controllers/TorqueEnable'
+  });
+
+  // Then we create a Service Request. The object we pass in to ROSLIB.ServiceRequest matches the 
+  // fields defined in the rospy_tutorials AddTwoInts.srv file.
+  var request23 = new ROSLIB.ServiceRequest({
+    bool : false
+  });
+
+  // Finally, we call the /add_two_ints service and get back the results in the callback. The result
+  // is a ROSLIB.ServiceResponse object.
+  ser23.callService(request23, function(result) {
+    console.log('Result for service call on ' + ser23.name );
+  });
+
+
+
+
+}
+
+
+function SpinLeftOn()
+{
+
+	var slo = new ROSLIB.Message({
+  	data : 1
+	});
+
+	var slovel = new ROSLIB.Message({
+  	data : -70
+	});
+
+    pubSpin.publish(slo);
+    pubDyn.publish(slovel)
+}
+
+
+function SpinRightOn()
+{
+
+	var sro = new ROSLIB.Message({
+  	data : 1
+	});
+
+	var srovel = new ROSLIB.Message({
+  	data : 70
+	});
+
+    pubSpin.publish(sro);
+    pubDyn.publish(srovel)
+}
+
+
+
+function SpinLeftOff()
+{
+
+	var sloff = new ROSLIB.Message({
+  	data : 0
+	});
+
+    pubDyn.publish(sloff);
+
+}
+
+function SpinRightOff()
+{
+
+	var sroff = new ROSLIB.Message({
+  	data : 0
+	});
+
+    pubDyn.publish(sroff);
+
+}
+
+</script>
+</head>
+<body  bgcolor="#E6E6FA" >
+
+
+
+<div id="container" style="width:1300px;height:768">
+
+<div id="menu" style="background-color:#E6E6FA;height:600px;width:200px;float:left;">
+	<b>Home</b><br>
+	<a href="/arm">Arm Navigation<a><br>
+
+	<a href="/camera">Camera</a><br />
+	<a href="/chat">Video Conference</a>
+</div>
+
+<div id="content" style="background-color:#EEEEEE;height:600px;width:1100px;float:left;">
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+<button onmousedown="pubLF()" onmouseup="pubStop()">LF</button>
+
+&nbsp;<button onmousedown="pubF()" onmouseup="pubStop()">F</button>
+&nbsp;<button onmousedown="pubRF()"onmouseup="pubStop()">RF</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<button onclick="pubChangeMode()">Change Mode</button>
+
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;<button onmousedown="pubL()">L</button>
+&nbsp;&nbsp;<button onclick="pubStop()" >STOP</button> &nbsp;&nbsp;<button onmousedown="pubR()" onmouseup="pubStop()">R</button>
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button onclick="pubRealtime()">Realtime</button>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button onclick="pubRecord()">Record</button>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button onclick="pubPlay()">Play</button>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button onclick="pubAutonomous()">Autonomous</button>
+
+ <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<button onmousedown="pubLB()" onmouseup="pubStop()">LB</button>
+&nbsp;<button onmousedown="pubB()" onmouseup="pubStop()">B</button>
+&nbsp;<button onmousedown="pubBR()" onmouseup="pubStop()">BR</button>
+
+
+<br></br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+<button onclick="pubTorqueEnable()">TORQUE ENABLE</button>
+
+&nbsp;&nbsp;&nbsp;
+
+<button onclick="pubTorqueDisable()">TORQUE DISABLE</button>
+
+
+<br></br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+<button onmousedown = "spinLeftOn()" onmouseup = "spinLeftOff()" >SPIN LEFT</button>
+&nbsp;&nbsp;&nbsp;
+<button onmousedown = "spinRightOn()" onmouseup = "spinRightOff()" >SPIN RIGHT</button>
+
+
+
+<br />
+<br />
+<p>Face Expressions</p>
+<button onclick="pubExp1()">Happy</button>
+<button onclick="pubExp2()">Sad</button>
+<button onclick="pubExp3()">Excited</button>
+<button onclick="pubExp4()">Expression 4</button>
+
+
+
+
+</div>
+
+<div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
+Copyright © Asimov Robotics Pvt Ltd</div>
+
+</body>
+</html>

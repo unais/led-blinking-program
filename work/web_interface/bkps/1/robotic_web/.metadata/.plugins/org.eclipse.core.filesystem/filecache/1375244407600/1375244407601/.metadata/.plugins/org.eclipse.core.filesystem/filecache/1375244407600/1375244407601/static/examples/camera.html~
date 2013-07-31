@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<script type="text/javascript" src="http://cdn.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+<script type="text/javascript" src="http://cdn.robotwebtools.org/mjpegcanvasjs/current/mjpegcanvas.min.js"></script>
+<div id="header">
+<h1 align="center"><font color="red">Asimov Robotics Pvt Ltd</font></h1>
+<h1 align="center">ISRA WEB CONTROL</h1>
+</div>
+
+<script type="text/javascript" type="text/javascript">
+  /**
+   * Setup all visualization elements when the page is loaded. 
+   */
+  function init() {
+    // Create the main viewer.
+    var viewer = new MJPEGCANVAS.Viewer({
+      divID : 'mjpeg',
+      host : '192.168.0.109',
+      width : 540,
+      height : 380,
+      topic : '/camera/image_raw'
+    });
+  }
+</script>
+</head>
+
+<body bgcolor="#E6E6FA" onload="init()">
+    <div id="container" style="width:1300px;height:768">
+
+	<div id="menu" style="background-color:#E6E6FA;height:600px;width:200px;float:left;">
+		
+		<a href="/main"><b>Home</b></a><br>
+		<a href="/arm">Arm Navigation<a><br>
+
+		<a href="/camera">Camera</a><br />
+		<a href="/chat">Video Conference</a>
+
+	</div>
+
+	<div id="content" style="background-color:#EEEEEE;height:600px;width:1100px;float:left;">
+
+  		<h1>ISRA Live Streaming</h1>
+  		<div id="mjpeg"></div>
+	</div>
+
+	<div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
+	Copyright © Asimov Robotics Pvt Ltd</div>
+
+</body>
+</html>

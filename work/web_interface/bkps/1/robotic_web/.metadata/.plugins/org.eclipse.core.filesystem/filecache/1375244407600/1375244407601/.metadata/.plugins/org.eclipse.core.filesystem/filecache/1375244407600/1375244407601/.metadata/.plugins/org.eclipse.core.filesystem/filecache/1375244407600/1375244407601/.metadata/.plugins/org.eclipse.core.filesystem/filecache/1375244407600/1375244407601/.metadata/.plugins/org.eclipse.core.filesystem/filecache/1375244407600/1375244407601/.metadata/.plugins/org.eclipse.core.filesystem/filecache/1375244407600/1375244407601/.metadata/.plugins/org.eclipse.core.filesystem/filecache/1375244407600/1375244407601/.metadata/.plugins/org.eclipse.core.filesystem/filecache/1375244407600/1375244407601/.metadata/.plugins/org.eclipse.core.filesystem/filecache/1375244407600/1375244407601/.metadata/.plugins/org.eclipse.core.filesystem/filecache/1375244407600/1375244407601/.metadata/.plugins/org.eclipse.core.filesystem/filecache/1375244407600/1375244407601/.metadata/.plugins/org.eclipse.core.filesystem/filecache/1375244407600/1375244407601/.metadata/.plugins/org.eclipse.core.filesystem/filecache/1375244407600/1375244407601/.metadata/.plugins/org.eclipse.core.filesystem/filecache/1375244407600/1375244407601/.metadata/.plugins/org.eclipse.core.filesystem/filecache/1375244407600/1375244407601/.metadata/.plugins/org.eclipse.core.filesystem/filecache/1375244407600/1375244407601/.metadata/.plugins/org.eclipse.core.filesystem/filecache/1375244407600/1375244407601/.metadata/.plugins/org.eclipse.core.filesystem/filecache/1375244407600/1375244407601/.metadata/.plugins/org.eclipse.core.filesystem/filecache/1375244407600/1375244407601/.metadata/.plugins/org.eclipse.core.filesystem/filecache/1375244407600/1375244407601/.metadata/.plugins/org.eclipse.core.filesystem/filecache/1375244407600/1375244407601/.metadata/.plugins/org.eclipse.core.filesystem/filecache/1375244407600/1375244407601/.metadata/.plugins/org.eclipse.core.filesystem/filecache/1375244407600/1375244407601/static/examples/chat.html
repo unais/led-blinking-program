@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Tornado WebRTC</title>
+
+	<link href="/static/css/kube.min.css" rel="stylesheet" type="text/css" />
+	<link href="/static/css/main.css" rel="stylesheet" type="text/css" />
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="/static/js/webrtc-adapter.js"></script>
+    <script src="/static/js/main.js"></script>
+	<div id="header">
+	<h1 align="center"><font color="red">Asimov Robotics Pvt Ltd</font></h1>
+	<h1 align="center">ISRA WEB CONTROL</h1>
+	</div>
+  </head>
+
+
+<body bgcolor="#E6E6FA" onload="init()">
+    <div id="container" style="width:1300px;height:768">
+
+	<div id="menu" style="background-color:#E6E6FA;height:600px;width:200px;float:left;">
+		
+		<a href="/main"><b>Home</b></a><br>
+		<a href="/arm">Arm Navigation<a><br>
+
+		<a href="/camera">Camera</a><br />
+		<a href="/chat">Video Conference</a>
+	</div>
+
+	<div id="content" style="background-color:#EEEEEE;height:600px;width:1100px;float:left;">
+
+	
+	    	<section>
+	      		<video id="remote" autoplay></video>
+	      		<video id="local" autoplay muted></video>
+	    	</section>
+	    	<section class="forms">
+      		<ul>
+        	<li><label class="small"><input id="audio" type="checkbox" checked>Use mic</label></li>
+        	<li><label class="small"><input id="video" type="checkbox" checked>Use webcam</label></li>
+        	<li class="btn-group">
+        	  <button id="btn-call" class="btn" onclick="call()">I want to call</button>
+        	  <button id="btn-receive" class="btn" onclick="receive()">I want to receive a call</button>
+        	</li>
+      		</ul>
+    		</section>
+    		<footer>
+      		<span id="streaming" class="small"></span>
+      		<span id="status" class="small"></span>
+    		</footer>
+
+		
+
+	</div>
+
+	<div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
+	Copyright © Asimov Robotics Pvt Ltd</div>
+
+</body>
+</html>
